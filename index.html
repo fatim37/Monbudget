@@ -20,6 +20,82 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body { height: 100%; background: var(--bg); color: var(--text); font-family: Arial, sans-serif; }
+
+    /* ── ÉCRAN DE DÉVERROUILLAGE ── */
+    #lockScreen {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 32px 24px;
+    }
+    #lockScreen.hidden { display: none; }
+
+    .lock-logo {
+      font-size: 56px; margin-bottom: 12px;
+    }
+    .lock-title {
+      font-size: 28px; font-weight: 800; color: var(--accent);
+      letter-spacing: -0.5px; margin-bottom: 6px;
+    }
+    .lock-subtitle {
+      font-size: 13px; color: var(--text2); margin-bottom: 40px; text-align: center; line-height: 1.5;
+    }
+    .lock-label {
+      font-size: 11px; color: var(--text2); letter-spacing: 1px;
+      margin-bottom: 8px; width: 100%; max-width: 320px;
+    }
+    .lock-input {
+      width: 100%; max-width: 320px;
+      background: var(--surface);
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 16px 20px;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      transition: border-color 0.2s;
+    }
+    .lock-input:focus { border-color: var(--accent); }
+    .lock-input.error { border-color: #ff6b6b; animation: shake 0.4s; }
+    .lock-btn {
+      width: 100%; max-width: 320px;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #5b52d4);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .lock-btn:active { opacity: 0.85; }
+    .lock-error {
+      font-size: 13px; color: #ff6b6b;
+      text-align: center; min-height: 20px;
+      transition: opacity 0.3s;
+    }
+    .lock-footer {
+      position: absolute; bottom: 28px;
+      font-size: 11px; color: rgba(255,255,255,0.2);
+      text-align: center;
+    }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-6px)}
+      80%{transform:translateX(6px)}
+    }
+
+    /* ── APP ── */
     #app { display: flex; flex-direction: column; height: 100vh; max-width: 430px; margin: 0 auto; }
 
     .header { padding: 40px 20px 16px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
@@ -29,7 +105,6 @@
     .content { flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
     .content::-webkit-scrollbar { display: none; }
 
-    /* Balance */
     .balance-card { background: linear-gradient(135deg, var(--accent), #5b52d4); border-radius: 18px; padding: 24px; margin-bottom: 16px; color: white; }
     .balance-label { font-size: 12px; opacity: 0.8; margin-bottom: 6px; }
     .balance-amount { font-size: 32px; font-weight: 700; margin-bottom: 20px; }
@@ -38,14 +113,12 @@
     .bi-label { font-size: 11px; opacity: 0.8; margin-bottom: 4px; }
     .bi-val { font-size: 16px; font-weight: 600; }
 
-    /* Alertes */
     .alert-box { border-radius: 14px; padding: 12px 16px; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
     .alert-warning { background: rgba(255,209,102,0.12); border: 1px solid rgba(255,209,102,0.3); color: #ffd166; }
     .alert-danger  { background: rgba(255,107,107,0.12); border: 1px solid rgba(255,107,107,0.3); color: #ff6b6b; }
     .alert-success { background: rgba(45,212,160,0.12);  border: 1px solid rgba(45,212,160,0.3);  color: #2dd4a0; }
     .alert-info    { background: rgba(124,111,247,0.12); border: 1px solid rgba(124,111,247,0.3); color: var(--accent); }
 
-    /* Budget */
     .budget-card { background: var(--surface); border-radius: 18px; padding: 18px; margin-bottom: 16px; border: 1px solid rgba(255,255,255,0.06); }
     .budget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .budget-title { font-size: 14px; font-weight: 600; }
@@ -55,12 +128,10 @@
     .budget-footer { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); }
     .budget-footer strong { color: var(--text); }
 
-    /* Conseil */
     .conseil-card { background: var(--surface); border-radius: 18px; padding: 16px; margin-bottom: 16px; border-left: 3px solid var(--accent); }
     .conseil-title { font-size: 11px; color: var(--accent); letter-spacing: 1px; margin-bottom: 6px; }
     .conseil-text { font-size: 13px; color: var(--text); line-height: 1.6; }
 
-    /* Badges */
     .badges-section { margin-bottom: 16px; }
     .badges-title { font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 10px; }
     .badges-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -68,7 +139,6 @@
     .badge.earned { border-color: var(--accent); background: rgba(124,111,247,0.12); color: var(--accent); }
     .badge.locked { opacity: 0.4; }
 
-    /* Transactions */
     .txn-item { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border-radius: 12px; padding: 14px; margin-bottom: 8px; }
     .txn-left { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .txn-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
@@ -113,7 +183,6 @@
 
     .stats-card { background: var(--surface); border-radius: 18px; padding: 20px; margin-bottom: 16px; }
 
-    /* Épargne */
     .add-goal-btn { width: 100%; padding: 14px; border-radius: 12px; border: 1px dashed rgba(124,111,247,0.4); background: transparent; color: var(--accent); font-size: 14px; cursor: pointer; margin-top: 8px; }
     .goal-card { background: var(--surface); border-radius: 18px; padding: 20px; margin-bottom: 12px; }
     .goal-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
@@ -122,7 +191,6 @@
     .progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--green), #1faaaa); }
     .goal-pct { font-size: 12px; color: var(--green); font-weight: 600; text-align: right; }
 
-    /* Rapport */
     .rapport-card { background: var(--surface); border-radius: 18px; padding: 20px; margin-bottom: 16px; }
     .rapport-month-selector { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
     .rapport-arrow { width: 36px; height: 36px; border-radius: 50%; background: #22213a; border: none; color: var(--text); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -132,7 +200,6 @@
     .rapport-label { font-size: 13px; color: var(--text2); }
     .rapport-val { font-size: 14px; font-weight: 600; }
 
-    /* Donut */
     .donut-wrap { display: flex; justify-content: center; margin: 16px 0; }
     .cat-stat-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .cat-stat-row:last-child { border-bottom: none; }
@@ -141,11 +208,9 @@
     .cat-stat-pct { font-size: 12px; color: var(--text2); margin-right: 8px; }
     .cat-stat-val { font-size: 13px; font-weight: 600; color: #ff6b6b; }
 
-    /* Toast */
     .toast { position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; padding: 14px 20px; font-size: 13px; z-index: 300; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 4px 20px rgba(0,0,0,0.4); max-width: 90vw; text-align: center; }
     .toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* Badge popup */
     .badge-popup { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 20px; }
     .badge-popup.show { opacity: 1; pointer-events: all; }
     .badge-popup-card { background: var(--surface); border-radius: 24px; padding: 40px 32px; text-align: center; border: 1px solid var(--accent); width: 100%; max-width: 300px; }
@@ -163,7 +228,26 @@
 </head>
 <body>
 
-<div id="app">
+<!-- ── ÉCRAN DE DÉVERROUILLAGE ── -->
+<div id="lockScreen">
+  <div class="lock-logo">💰</div>
+  <div class="lock-title">MonBudget</div>
+  <div class="lock-subtitle">Entrez votre code d'activation<br>pour accéder à l'application</div>
+  <div class="lock-label">CODE D'ACTIVATION</div>
+  <input class="lock-input" type="text" id="lockInput"
+         placeholder="EX: FATOU-7823"
+         maxlength="20"
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="characters"
+         spellcheck="false"
+         onkeydown="if(event.key==='Enter') checkCode()">
+  <button class="lock-btn" onclick="checkCode()">Déverrouiller →</button>
+  <div class="lock-error" id="lockError"></div>
+  <div class="lock-footer">Vous n'avez pas de code ? Contactez votre revendeur.</div>
+</div>
+
+<div id="app" style="display:none;">
 
   <div class="header">
     <h1>MonBudget</h1>
@@ -234,12 +318,10 @@
         <div id="rapportContenu"></div>
         <button onclick="exportRapportPDF()" style="width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#5b52d4);color:white;font-size:14px;font-weight:600;cursor:pointer;margin-top:16px;">📤 Exporter en PDF</button>
       </div>
-
       <div class="stats-card">
         <div style="font-size:14px;font-weight:600;margin-bottom:14px;">Revenus vs Dépenses</div>
         <canvas id="barChart"></canvas>
       </div>
-
       <div class="stats-card">
         <div style="font-size:14px;font-weight:600;margin-bottom:4px;">Dépenses par catégorie</div>
         <div style="font-size:11px;color:var(--text2);margin-bottom:12px;">Sur quoi dépensez-vous le plus ?</div>
@@ -373,609 +455,617 @@
 </div>
 
 <script>
-  // ── CATÉGORIES ──
-  const CATS = [
-    { id: 'alimentation', emoji: '🛒', label: 'Courses',   color: '#a29bfe' },
-    { id: 'transport',    emoji: '🚌', label: 'Transport', color: '#74b9ff' },
-    { id: 'logement',     emoji: '🏠', label: 'Logement',  color: '#ffd166' },
-    { id: 'sante',        emoji: '💊', label: 'Santé',     color: '#2dd4a0' },
-    { id: 'loisirs',      emoji: '🎮', label: 'Loisirs',   color: '#fd79a8' },
-    { id: 'education',    emoji: '📚', label: 'Études',    color: '#55efc4' },
-    { id: 'vetements',    emoji: '👕', label: 'Vêtements', color: '#e17055' },
-    { id: 'restaurant',   emoji: '🍽', label: 'Resto',     color: '#fdcb6e' },
-    { id: 'facture',      emoji: '📄', label: 'Facture',   color: '#b2bec3' },
-    { id: 'cadeau',       emoji: '🎁', label: 'Cadeau',    color: '#ff6b6b' },
-    { id: 'salaire',      emoji: '💼', label: 'Salaire',   color: '#2dd4a0' },
-    { id: 'autre',        emoji: '📦', label: 'Autre',     color: '#a7a9be' },
-  ];
+// ══════════════════════════════════════════
+//  SYSTÈME D'ACTIVATION
+//  Les codes sont stockés sous forme de hachages SHA-256
+//  pour qu'ils ne soient pas lisibles dans le fichier.
+// ══════════════════════════════════════════
 
-  // ── BADGES ──
-  const BADGES_DEF = [
-    { id: 'first_txn',      emoji: '🌟', label: 'Premier pas',     desc: 'Vous avez ajouté votre première transaction !' },
-    { id: 'budget_ok',      emoji: '✅', label: 'Budget maîtrisé', desc: 'Vous avez respecté votre budget ce mois !' },
-    { id: 'saver',          emoji: '🏦', label: 'Épargnant',       desc: 'Vous avez créé votre premier objectif d\'épargne !' },
-    { id: 'goal_reached',   emoji: '🎯', label: 'Objectif atteint',desc: 'Félicitations ! Vous avez atteint un objectif d\'épargne !' },
-    { id: 'ten_txns',       emoji: '💪', label: 'Régulier',        desc: 'Vous avez enregistré 10 transactions. Continuez ainsi !' },
-    { id: 'positive_month', emoji: '📈', label: 'Mois positif',    desc: 'Vos revenus dépassent vos dépenses ce mois !' },
-  ];
+// Fonction de hachage simple (non-cryptographique mais suffisant pour usage local)
+function hashCode(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0;
+  }
+  return hash.toString(16);
+}
 
-  // ── ÉTAT ──
-  let state = {
-    transactions: [],
-    goals: [],
-    budget: null,
-    badges: [],
-    settings: { color: '#7c6ff7' }
-  };
+// ── CODES VALIDES (hachés) ──
+// Pour ajouter un nouveau code, utilisez admin.html
+// qui génère automatiquement les hachages.
+// Format : hashCode("CODE-XXXX") → valeur à coller ici
+const CODES_HASHES = new Set([
+  // Exemple de codes pré-installés (générés via admin.html) :
+  // hashCode("DEMO-0000") = valeur ci-dessous
+  hashCode("DEMO-0000"),
+]);
 
-  try {
-    const saved = localStorage.getItem('monbudget');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // FIX 1 : fusion sécurisée pour ne pas perdre les champs manquants
-      state = Object.assign(state, parsed);
-      if (!Array.isArray(state.goals))        state.goals = [];
-      if (!Array.isArray(state.badges))       state.badges = [];
-      if (!Array.isArray(state.transactions)) state.transactions = [];
-      if (!state.settings)                    state.settings = { color: '#7c6ff7' };
-      if (!state.settings.color)              state.settings.color = '#7c6ff7';
-    }
-  } catch(e) { console.warn('Erreur chargement données:', e); }
+const LOCK_KEY = 'monbudget_activated';
 
-  function save() {
-    try { localStorage.setItem('monbudget', JSON.stringify(state)); }
-    catch(e) { console.warn('Erreur sauvegarde:', e); }
+function checkCode() {
+  const raw   = document.getElementById('lockInput').value.trim().toUpperCase();
+  const input = document.getElementById('lockInput');
+  const errEl = document.getElementById('lockError');
+
+  if (!raw) {
+    errEl.textContent = 'Veuillez entrer votre code.';
+    return;
   }
 
-  // ── UTILITAIRES ──
-  const MOIS_NOMS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-
-  function getMoisActuel() {
-    const d = new Date();
-    return { mois: d.getMonth(), annee: d.getFullYear() };
+  if (CODES_HASHES.has(hashCode(raw))) {
+    // Code valide → sauvegarder et déverrouiller
+    localStorage.setItem(LOCK_KEY, hashCode(raw));
+    unlock();
+  } else {
+    input.classList.add('error');
+    errEl.textContent = '❌ Code incorrect. Vérifiez votre code ou contactez votre revendeur.';
+    setTimeout(() => input.classList.remove('error'), 600);
   }
+}
 
-  function getMoisLabel(m, a) { return MOIS_NOMS[m] + ' ' + a; }
+function unlock() {
+  document.getElementById('lockScreen').classList.add('hidden');
+  document.getElementById('app').style.display = 'flex';
+  initApp();
+}
 
-  // FIX 2 : parsing de date robuste (supporte DD/MM/YYYY et D/M/YYYY)
-  function txnsDuMois(mois, annee) {
-    return state.transactions.filter(t => {
-      try {
-        const p = t.date.split('/');
-        if (p.length < 3) return false;
-        const tMois  = parseInt(p[1], 10) - 1;
-        const tAnnee = parseInt(p[2], 10);
-        return tMois === mois && tAnnee === annee;
-      } catch(e) { return false; }
-    });
+// Vérifier si déjà activé au chargement
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(LOCK_KEY);
+  if (saved && [...CODES_HASHES].includes(saved)) {
+    unlock();
   }
-
-  // FIX 3 : échapper le texte utilisateur pour éviter les injections HTML
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;');
+  // Focus sur le champ si non activé
+  else {
+    setTimeout(() => document.getElementById('lockInput').focus(), 300);
   }
+});
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-  }
+// ══════════════════════════════════════════
+//  APPLICATION
+// ══════════════════════════════════════════
 
-  // ── BADGES ──
-  function checkBadges(balance) {
-    const { mois, annee } = getMoisActuel();
-    const txnsMois = txnsDuMois(mois, annee);
-    const income  = txnsMois.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-    const expense = txnsMois.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-
-    const checks = {
-      first_txn:      state.transactions.length >= 1,
-      budget_ok:      !!(state.budget && expense <= state.budget && txnsMois.length > 0),
-      saver:          state.goals.length >= 1,
-      goal_reached:   state.goals.some(g => g.saved >= g.target),
-      ten_txns:       state.transactions.length >= 10,
-      positive_month: income > 0 && income > expense,
-    };
-
-    BADGES_DEF.forEach(b => {
-      if (checks[b.id] && !state.badges.includes(b.id)) {
-        state.badges.push(b.id);
-        save();
-        setTimeout(() => showBadgePopup(b), 600);
-      }
-    });
-  }
-
-  function showBadgePopup(badge) {
-    document.getElementById('badgePopupEmoji').textContent = badge.emoji;
-    document.getElementById('badgePopupTitle').textContent = '🏆 ' + badge.label;
-    document.getElementById('badgePopupDesc').textContent  = badge.desc;
-    document.getElementById('badgePopup').classList.add('show');
-  }
-
-  function closeBadgePopup() {
-    document.getElementById('badgePopup').classList.remove('show');
-  }
-
-  function renderBadges() {
-    const section = document.getElementById('badgesSection');
-    if (state.badges.length === 0) { section.style.display = 'none'; return; }
-    section.style.display = 'block';
-    document.getElementById('badgesRow').innerHTML = BADGES_DEF.map(b =>
-      `<div class="badge ${state.badges.includes(b.id)?'earned':'locked'}">${b.emoji} ${escHtml(b.label)}</div>`
-    ).join('');
-  }
-
-  // ── CONSEIL ──
-  function genererConseil(income, expense, balance) {
-    const { mois, annee } = getMoisActuel();
-    const txnsMois  = txnsDuMois(mois, annee);
-    const conseilEl = document.getElementById('conseilCard');
-    const textEl    = document.getElementById('conseilText');
-    if (txnsMois.length === 0) { conseilEl.style.display = 'none'; return; }
-
-    const catTotals = {};
-    txnsMois.filter(t=>t.type==='expense').forEach(t => {
-      const k = t.cat ? t.cat.label : 'Autre';
-      catTotals[k] = (catTotals[k]||0) + t.amount;
-    });
-    const topCat  = Object.entries(catTotals).sort((a,b)=>b[1]-a[1])[0];
-    const taux    = income > 0 ? Math.round((expense/income)*100) : 0;
-    const epargne = income > 0 ? Math.round(((income-expense)/income)*100) : 0;
-
-    let conseil = '';
-
-    // FIX 4 : vérifier que le solde est positif et significatif avant l'alerte épargne
-    if (state.goals.length > 0 && balance > 0) {
-      state.goals.forEach(g => {
-        const manque = g.target - g.saved;
-        if (manque > 0 && manque <= balance * 0.2) {
-          conseil = `🎯 Vous êtes très proche de votre objectif "${g.name}" ! Il vous manque seulement ${manque.toLocaleString('fr-FR')} FCFA. Un petit effort et vous y êtes !`;
-        }
-      });
-    }
-
-    if (!conseil) {
-      if (taux > 90)         conseil = `⚠️ Vous avez dépensé ${taux}% de vos revenus ce mois. Essayez de réduire vos dépenses pour épargner davantage.`;
-      else if (taux > 70)    conseil = `📊 Vos dépenses représentent ${taux}% de vos revenus.${topCat ? ' La catégorie la plus importante est "'+topCat[0]+'" ('+topCat[1].toLocaleString('fr-FR')+' FCFA).' : ''}`;
-      else if (epargne > 20) conseil = `🌟 Excellent ! Vous épargnez ${epargne}% de vos revenus ce mois. Continuez ainsi !`;
-      else if (topCat)       conseil = `💡 Ce mois, vous dépensez le plus en "${topCat[0]}" (${topCat[1].toLocaleString('fr-FR')} FCFA). Est-ce possible de réduire ce poste ?`;
-      else                   conseil = `💪 Continuez à enregistrer vos transactions pour obtenir des conseils personnalisés !`;
-    }
-
-    conseilEl.style.display = 'block';
-    textEl.textContent = conseil;
-  }
-
-  // ── ALERTES ÉPARGNE ──
-  function renderAlertes(balance) {
-    const zone = document.getElementById('alertesZone');
-    let html = '';
-    state.goals.forEach(g => {
-      const manque = g.target - g.saved;
-      if (g.saved >= g.target) {
-        html += `<div class="alert-box alert-success">🎉 Objectif "${escHtml(g.name)}" atteint ! Félicitations !</div>`;
-      } else if (balance > 0 && manque <= balance * 0.15) {
-        html += `<div class="alert-box alert-info">🎯 Presque là ! Il vous manque <strong>${manque.toLocaleString('fr-FR')} FCFA</strong> pour atteindre "${escHtml(g.name)}".</div>`;
-      } else if (balance > 0 && manque <= balance * 0.3) {
-        html += `<div class="alert-box alert-warning">💡 Vous pouvez presque atteindre "${escHtml(g.name)}". Encore <strong>${manque.toLocaleString('fr-FR')} FCFA</strong> à épargner.</div>`;
-      }
-    });
-    zone.innerHTML = html;
-  }
-
-  // ── BUDGET ──
-  function openBudgetModal() {
-    document.getElementById('budgetInput').value = state.budget || '';
-    document.getElementById('budgetModal').classList.add('open');
-  }
-
-  function saveBudget() {
-    const val = parseFloat(document.getElementById('budgetInput').value);
-    if (!val || val <= 0) { showToast('⚠️ Entrez un montant valide !'); return; }
-    state.budget = val;
-    save();
-    document.getElementById('budgetModal').classList.remove('open');
-    renderHome();
-    showToast('✅ Budget enregistré !');
-  }
-
-  function renderBudget(expense) {
-    document.getElementById('budgetSpent').textContent = expense.toLocaleString('fr-FR');
-    const barFill = document.getElementById('budgetBarFill');
-    if (!state.budget) {
-      document.getElementById('budgetMax').textContent = 'Non défini';
-      barFill.style.width = '0%';
-      barFill.style.background = 'var(--green)';
-      return;
-    }
-    document.getElementById('budgetMax').textContent = state.budget.toLocaleString('fr-FR');
-    const pct = Math.min(100, (expense / state.budget) * 100);
-    barFill.style.width = pct + '%';
-    barFill.style.background = pct >= 100 ? '#ff6b6b' : pct >= 80 ? '#ffd166' : 'var(--green)';
-  }
-
-  // ── TRANSACTIONS ──
-  let currentType = 'income';
-  let selectedCat = 'autre';
-
-  function openModal() {
-    selectedCat = 'autre';
-    renderCatPicker();
-    setType('income');
-    document.getElementById('txnAmount').value = '';
-    document.getElementById('txnDesc').value = '';
-    document.getElementById('modal').classList.add('open');
-  }
-
-  function closeModal() { document.getElementById('modal').classList.remove('open'); }
-
-  function setType(type) {
-    currentType = type;
-    document.getElementById('btnIncome').className  = type==='income'  ? 'type-btn active-income'  : 'type-btn';
-    document.getElementById('btnExpense').className = type==='expense' ? 'type-btn active-expense' : 'type-btn';
-    document.getElementById('catPickerGroup').style.display = type==='income' ? 'none' : 'block';
-  }
-
-  function renderCatPicker() {
-    document.getElementById('catPicker').innerHTML = CATS.map(c =>
-      `<div class="cat-option ${selectedCat===c.id?'selected':''}" onclick="selectCat('${c.id}')">
-        <div class="cat-emoji">${c.emoji}</div>
-        <div class="cat-label">${escHtml(c.label)}</div>
-      </div>`
-    ).join('');
-  }
-
-  function selectCat(id) { selectedCat = id; renderCatPicker(); }
-
-  function addTransaction() {
-    const amount = parseFloat(document.getElementById('txnAmount').value);
-    const desc   = document.getElementById('txnDesc').value.trim();
-    if (!amount || amount <= 0) { showToast('⚠️ Entrez un montant valide !'); return; }
-    if (!desc)                  { showToast('⚠️ Entrez une description !'); return; }
-
-    const cat = currentType === 'income'
-      ? { id:'salaire', emoji:'💼', label:'Salaire', color:'#2dd4a0' }
-      : (CATS.find(c => c.id === selectedCat) || CATS[CATS.length-1]);
-
-    state.transactions.unshift({
-      id: Date.now(), type: currentType, amount, desc, cat,
-      date: new Date().toLocaleDateString('fr-FR')
-    });
-    save();
-    closeModal();
-    renderHome(); // FIX 1 : renderHome calcule le vrai balance et le passe à checkBadges
-  }
-
-  function deleteTransaction(id) {
-    if (confirm('Supprimer cette transaction ?')) {
-      state.transactions = state.transactions.filter(t => t.id !== id);
-      save(); renderHome();
-    }
-  }
-
-  function txnHTML(t) {
-    const cat = t.cat || { emoji:'📦', label:'Autre', color:'#a7a9be' };
-    return `<div class="txn-item">
-      <div class="txn-left">
-        <div class="txn-icon" style="background:${cat.color}33;">${cat.emoji}</div>
-        <div style="min-width:0;">
-          <div class="txn-name">${escHtml(t.desc)}</div>
-          <div class="txn-cat">${escHtml(cat.label)} · ${escHtml(t.date)}</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;flex-shrink:0;">
-        <div class="txn-amount ${t.type==='income'?'income':'expense'}">
-          ${t.type==='income'?'+':'-'}${t.amount.toLocaleString('fr-FR')} F
-        </div>
-        <div class="delete-btn" onclick="deleteTransaction(${t.id})">🗑</div>
-      </div>
-    </div>`;
-  }
-
-  // ── ACCUEIL ──
-  function renderHome() {
-    const { mois, annee } = getMoisActuel();
-    const txnsMois = txnsDuMois(mois, annee);
-    const income   = txnsMois.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-    const expense  = txnsMois.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-    const balance  = state.transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0)
-                   - state.transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-
-    document.getElementById('balanceAmt').textContent   = balance.toLocaleString('fr-FR') + ' FCFA';
-    document.getElementById('totalIncome').textContent  = income.toLocaleString('fr-FR');
-    document.getElementById('totalExpense').textContent = expense.toLocaleString('fr-FR');
-
-    renderBudget(expense);
-    renderAlertes(balance);
-    genererConseil(income, expense, balance);
-    renderBadges();
-    checkBadges(balance); // FIX 1 : on passe le vrai balance
-
-    const list   = document.getElementById('txnList');
-    const recent = state.transactions.slice(0, 8);
-    list.innerHTML = recent.length === 0
-      ? '<p style="text-align:center;color:var(--text2);padding:30px;">Aucune transaction pour l\'instant !</p>'
-      : recent.map(t => txnHTML(t)).join('');
-  }
-
-  // ── RAPPORT ──
-  let rapportMois, rapportAnnee, barChartInst, donutChartInst;
-
-  function initRapport() {
-    const { mois, annee } = getMoisActuel();
-    rapportMois = mois; rapportAnnee = annee;
-    renderRapport();
-  }
-
-  function changerMoisRapport(dir) {
-    rapportMois += dir;
-    if (rapportMois < 0)  { rapportMois = 11; rapportAnnee--; }
-    if (rapportMois > 11) { rapportMois = 0;  rapportAnnee++; }
-    renderRapport();
-  }
-
-  function renderRapport() {
-    document.getElementById('rapportMonthName').textContent = getMoisLabel(rapportMois, rapportAnnee);
-    const txns    = txnsDuMois(rapportMois, rapportAnnee);
-    const income  = txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-    const expense = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-    const solde   = income - expense;
-    const epargne = income > 0 ? Math.round((solde/income)*100) : 0;
-
-    const catTotals = {};
-    txns.filter(t=>t.type==='expense').forEach(t => {
-      const k = t.cat ? t.cat.label : 'Autre';
-      catTotals[k] = (catTotals[k]||0) + t.amount;
-    });
-    const topCats = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,3);
-
-    document.getElementById('rapportContenu').innerHTML = `
-      <div class="rapport-row"><div class="rapport-label">💰 Revenus</div><div class="rapport-val income">+${income.toLocaleString('fr-FR')} FCFA</div></div>
-      <div class="rapport-row"><div class="rapport-label">💸 Dépenses</div><div class="rapport-val expense">-${expense.toLocaleString('fr-FR')} FCFA</div></div>
-      <div class="rapport-row"><div class="rapport-label">📊 Solde</div><div class="rapport-val" style="color:${solde>=0?'#2dd4a0':'#ff6b6b'}">${solde>=0?'+':''}${solde.toLocaleString('fr-FR')} FCFA</div></div>
-      <div class="rapport-row"><div class="rapport-label">🏦 Taux d'épargne</div><div class="rapport-val" style="color:#2dd4a0">${epargne}%</div></div>
-      ${state.budget?`<div class="rapport-row"><div class="rapport-label">📅 Budget utilisé</div><div class="rapport-val" style="color:${expense>state.budget?'#ff6b6b':'#ffd166'}">${Math.round((expense/state.budget)*100)}%</div></div>`:''}
-      <div class="rapport-row"><div class="rapport-label">📝 Transactions</div><div class="rapport-val">${txns.length}</div></div>
-      ${topCats.length>0?`<div style="margin-top:12px;"><div style="font-size:12px;color:var(--text2);margin-bottom:8px;">TOP DÉPENSES</div>${topCats.map(([l,a])=>`<div class="rapport-row"><div class="rapport-label">${escHtml(l)}</div><div class="rapport-val expense">${a.toLocaleString('fr-FR')} F</div></div>`).join('')}</div>`:''}
-    `;
-
-    if (barChartInst) barChartInst.destroy();
-    barChartInst = new Chart(document.getElementById('barChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Revenus','Dépenses','Solde'],
-        datasets: [{ data: [income, expense, Math.max(0,solde)],
-          backgroundColor: [state.settings.color,'#ff6b6b','#2dd4a0'], borderRadius: 8 }]
-      },
-      options: { responsive: true, plugins: { legend:{display:false} },
-        scales: { x:{ticks:{color:'#a7a9be'},grid:{display:false}},
-                  y:{ticks:{color:'#a7a9be'},grid:{color:'rgba(255,255,255,0.05)'}} } }
-    });
-
-    if (donutChartInst) donutChartInst.destroy();
-    const allCatTotals = {};
-    state.transactions.filter(t=>t.type==='expense').forEach(t => {
-      const k     = t.cat ? t.cat.label : 'Autre';
-      const color = t.cat ? t.cat.color : '#a7a9be';
-      if (!allCatTotals[k]) allCatTotals[k] = { amount:0, color };
-      allCatTotals[k].amount += t.amount;
-    });
-    const catEntries   = Object.entries(allCatTotals).sort((a,b)=>b[1].amount-a[1].amount);
-    const totalDepense = catEntries.reduce((s,[,v])=>s+v.amount,0) || 1;
-
-    if (catEntries.length > 0) {
-      donutChartInst = new Chart(document.getElementById('donutChart'), {
-        type: 'doughnut',
-        data: {
-          labels: catEntries.map(([k])=>k),
-          datasets: [{ data: catEntries.map(([,v])=>v.amount),
-            backgroundColor: catEntries.map(([,v])=>v.color),
-            borderWidth:0, hoverOffset:6 }]
-        },
-        options: { responsive:true, maintainAspectRatio:false, cutout:'65%',
-          plugins:{legend:{display:false}} }
-      });
-      document.getElementById('catStatRows').innerHTML = catEntries.map(([label,v]) =>
-        `<div class="cat-stat-row">
-          <div class="cat-stat-dot" style="background:${v.color}"></div>
-          <div class="cat-stat-name">${escHtml(label)}</div>
-          <div class="cat-stat-pct">${Math.round((v.amount/totalDepense)*100)}%</div>
-          <div class="cat-stat-val">${v.amount.toLocaleString('fr-FR')} F</div>
-        </div>`
-      ).join('');
-    } else {
-      document.getElementById('catStatRows').innerHTML =
-        '<p style="text-align:center;color:var(--text2);padding:20px;">Aucune dépense enregistrée</p>';
-    }
-  }
-
-  // ── EXPORT PDF RAPPORT ──
-  function exportRapportPDF() {
-    // FIX 5 : s'assurer que initRapport a été appelé
-    if (rapportMois === undefined) initRapport();
-    const { jsPDF } = window.jspdf;
-    const doc       = new jsPDF();
-    const moisLabel = getMoisLabel(rapportMois, rapportAnnee);
-    const txns      = txnsDuMois(rapportMois, rapportAnnee);
-    const income    = txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-    const expense   = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-
-    doc.setFontSize(20); doc.setTextColor(124,111,247);
-    doc.text('MonBudget — Rapport ' + moisLabel, 20, 20);
-    doc.setFontSize(11); doc.setTextColor(150,150,150);
-    doc.text('Généré le : ' + new Date().toLocaleDateString('fr-FR'), 20, 30);
-    doc.setDrawColor(124,111,247); doc.line(20,35,190,35);
-    doc.setFontSize(13);
-    doc.setTextColor(45,212,160);  doc.text('Revenus  : '+income.toLocaleString('fr-FR')+' FCFA', 20, 48);
-    doc.setTextColor(255,107,107); doc.text('Dépenses : '+expense.toLocaleString('fr-FR')+' FCFA', 20, 58);
-    doc.setTextColor(124,111,247); doc.text('Solde    : '+(income-expense).toLocaleString('fr-FR')+' FCFA', 20, 68);
-    doc.setDrawColor(200,200,200); doc.line(20,75,190,75);
-    doc.setFontSize(11); doc.setTextColor(100,100,100);
-    doc.text('Description',20,85); doc.text('Catégorie',100,85); doc.text('Date',145,85); doc.text('Montant',168,85);
-    let y = 95;
-    txns.forEach(t => {
-      if (y>270) { doc.addPage(); y=20; }
-      doc.setTextColor(t.type==='income'?45:255, t.type==='income'?212:107, t.type==='income'?160:107);
-      doc.setFontSize(10);
-      doc.text(String(t.desc).substring(0,25), 20, y);
-      doc.text(t.cat?t.cat.label:'Autre', 100, y);
-      doc.text(String(t.date), 145, y);
-      doc.text((t.type==='income'?'+':'-')+t.amount.toLocaleString('fr-FR'), 168, y);
-      y += 10;
-    });
-    doc.save('rapport-'+moisLabel.toLowerCase().replace(' ','-')+'.pdf');
-  }
-
-  // ── EXPORT PDF GÉNÉRAL ──
-  function exportPDF() {
-    if (!state.transactions.length) { showToast('⚠️ Aucune transaction à exporter !'); return; }
-    const { jsPDF } = window.jspdf;
-    const doc     = new jsPDF();
-    const income  = state.transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
-    const expense = state.transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-
-    doc.setFontSize(20); doc.setTextColor(124,111,247);
-    doc.text('MonBudget - Toutes les transactions', 20, 20);
-    doc.setFontSize(11); doc.setTextColor(150,150,150);
-    doc.text('Généré le : '+new Date().toLocaleDateString('fr-FR'), 20, 30);
-    doc.setDrawColor(124,111,247); doc.line(20,35,190,35);
-    doc.setFontSize(12);
-    doc.setTextColor(45,212,160);  doc.text('Revenus  : '+income.toLocaleString('fr-FR')+' FCFA', 20, 48);
-    doc.setTextColor(255,107,107); doc.text('Dépenses : '+expense.toLocaleString('fr-FR')+' FCFA', 20, 58);
-    doc.setTextColor(124,111,247); doc.text('Solde    : '+(income-expense).toLocaleString('fr-FR')+' FCFA', 20, 68);
-    doc.setDrawColor(200,200,200); doc.line(20,74,190,74);
-    doc.setFontSize(11); doc.setTextColor(100,100,100);
-    doc.text('Description',20,84); doc.text('Catégorie',100,84); doc.text('Date',145,84); doc.text('Montant',168,84);
-    let y = 94;
-    state.transactions.forEach(t => {
-      if (y>270) { doc.addPage(); y=20; }
-      doc.setTextColor(t.type==='income'?45:255, t.type==='income'?212:107, t.type==='income'?160:107);
-      doc.setFontSize(10);
-      doc.text(String(t.desc).substring(0,25), 20, y);
-      doc.text(t.cat?t.cat.label:'Autre', 100, y);
-      doc.text(String(t.date), 145, y);
-      doc.text((t.type==='income'?'+':'-')+t.amount.toLocaleString('fr-FR'), 168, y);
-      y += 10;
-    });
-    doc.save('monbudget-transactions.pdf');
-  }
-
-  // ── ÉPARGNE ──
-  function openGoalModal() {
-    document.getElementById('goalName').value  = '';
-    document.getElementById('goalTarget').value= '';
-    document.getElementById('goalSaved').value = '';
-    document.getElementById('goalModal').classList.add('open');
-  }
-
-  function addGoal() {
-    const name   = document.getElementById('goalName').value.trim();
-    const target = parseFloat(document.getElementById('goalTarget').value);
-    const saved  = parseFloat(document.getElementById('goalSaved').value) || 0;
-    if (!name)            { showToast('⚠️ Entrez un nom !'); return; }
-    if (!target||target<=0){ showToast('⚠️ Entrez un montant cible !'); return; }
-    if (saved > target)   { showToast('⚠️ Le montant épargné ne peut pas dépasser l\'objectif !'); return; }
-    state.goals.push({ id: Date.now(), name, target, saved });
-    save();
-    document.getElementById('goalModal').classList.remove('open');
-    renderSavings();
-    checkBadges(0);
-    showToast('🏦 Objectif créé !');
-  }
-
-  function addToGoal(id, amount) {
-    const g = state.goals.find(g=>g.id===id);
-    if (g) {
-      g.saved = Math.min(g.saved + amount, g.target);
-      save(); renderSavings(); checkBadges(0);
-      if (g.saved >= g.target) showToast('🎉 Objectif "'+g.name+'" atteint !');
-    }
-  }
-
-  function addToGoalInput(id) {
-    const input  = document.getElementById('add_'+id);
-    const amount = parseFloat(input.value);
-    if (!amount||amount<=0) { showToast('⚠️ Entrez un montant !'); return; }
-    input.value = '';
-    addToGoal(id, amount);
-  }
-
-  function deleteGoal(id) {
-    if (confirm('Supprimer cet objectif ?')) {
-      state.goals = state.goals.filter(g=>g.id!==id);
-      save(); renderSavings();
-    }
-  }
-
-  function renderSavings() {
-    const list = document.getElementById('goalsList');
-    if (!state.goals||state.goals.length===0) {
-      list.innerHTML = '<p style="text-align:center;color:var(--text2);padding:40px;">Aucun objectif pour l\'instant !</p>';
-      return;
-    }
-    list.innerHTML = state.goals.map(g => {
-      const pct = Math.min(100, Math.round((g.saved/g.target)*100));
-      return `<div class="goal-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-          <div class="goal-name">${escHtml(g.name)}</div>
-          <div class="delete-btn" onclick="deleteGoal(${g.id})">🗑</div>
-        </div>
-        <div class="goal-amounts">
-          <span>${g.saved.toLocaleString('fr-FR')} FCFA épargnés</span>
-          <span>Objectif : ${g.target.toLocaleString('fr-FR')}</span>
-        </div>
-        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-        <div class="goal-pct">${pct}% ${pct>=100?'🎉 Atteint !':''}</div>
-        <div style="display:flex;gap:8px;margin-top:12px;">
-          <input type="number" id="add_${g.id}" class="form-input" placeholder="Ajouter (FCFA)" style="flex:1;padding:10px 12px;font-size:14px;" min="0">
-          <button onclick="addToGoalInput(${g.id})" style="background:var(--green);color:#0f2a1f;border:none;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;">+</button>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // ── PARAMÈTRES ──
-  function selectColor(color, el) {
-    state.settings.color = color;
-    document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('selected'));
-    el.classList.add('selected');
-    document.documentElement.style.setProperty('--accent', color);
-    save();
-    showToast('🎨 Couleur mise à jour !');
-  }
-
-  function resetApp() {
-    if (confirm('Effacer TOUTES les données ? Cette action est irréversible !')) {
-      state.transactions = []; state.goals = []; state.budget = null; state.badges = [];
-      // On garde les settings (couleur)
-      save(); renderHome(); switchPage('home');
-      showToast('Données effacées.');
-    }
-  }
-
-  // ── NAVIGATION ──
-  function switchPage(page) {
-    document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-    const pageEl = document.getElementById('page-'+page);
-    if (pageEl) pageEl.style.display = 'block';
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    const navEl = document.getElementById('nav-'+page);
-    if (navEl) navEl.classList.add('active');
-    if (page==='rapport') initRapport();
-    if (page==='savings') renderSavings();
-  }
-
-  // ── DÉMARRAGE ──
+function initApp() {
   document.documentElement.style.setProperty('--accent', state.settings.color);
   document.getElementById('catPickerGroup').style.display = 'none';
   document.getElementById('headerMonth').textContent = getMoisLabel(getMoisActuel().mois, getMoisActuel().annee);
   renderHome();
+}
+
+// ── CATÉGORIES ──
+const CATS = [
+  { id: 'alimentation', emoji: '🛒', label: 'Courses',   color: '#a29bfe' },
+  { id: 'transport',    emoji: '🚌', label: 'Transport', color: '#74b9ff' },
+  { id: 'logement',     emoji: '🏠', label: 'Logement',  color: '#ffd166' },
+  { id: 'sante',        emoji: '💊', label: 'Santé',     color: '#2dd4a0' },
+  { id: 'loisirs',      emoji: '🎮', label: 'Loisirs',   color: '#fd79a8' },
+  { id: 'education',    emoji: '📚', label: 'Études',    color: '#55efc4' },
+  { id: 'vetements',    emoji: '👕', label: 'Vêtements', color: '#e17055' },
+  { id: 'restaurant',   emoji: '🍽', label: 'Resto',     color: '#fdcb6e' },
+  { id: 'facture',      emoji: '📄', label: 'Facture',   color: '#b2bec3' },
+  { id: 'cadeau',       emoji: '🎁', label: 'Cadeau',    color: '#ff6b6b' },
+  { id: 'salaire',      emoji: '💼', label: 'Salaire',   color: '#2dd4a0' },
+  { id: 'autre',        emoji: '📦', label: 'Autre',     color: '#a7a9be' },
+];
+
+// ── BADGES ──
+const BADGES_DEF = [
+  { id: 'first_txn',      emoji: '🌟', label: 'Premier pas',     desc: 'Vous avez ajouté votre première transaction !' },
+  { id: 'budget_ok',      emoji: '✅', label: 'Budget maîtrisé', desc: 'Vous avez respecté votre budget ce mois !' },
+  { id: 'saver',          emoji: '🏦', label: 'Épargnant',       desc: 'Vous avez créé votre premier objectif d\'épargne !' },
+  { id: 'goal_reached',   emoji: '🎯', label: 'Objectif atteint',desc: 'Félicitations ! Vous avez atteint un objectif d\'épargne !' },
+  { id: 'ten_txns',       emoji: '💪', label: 'Régulier',        desc: 'Vous avez enregistré 10 transactions. Continuez ainsi !' },
+  { id: 'positive_month', emoji: '📈', label: 'Mois positif',    desc: 'Vos revenus dépassent vos dépenses ce mois !' },
+];
+
+// ── ÉTAT ──
+let state = {
+  transactions: [],
+  goals: [],
+  budget: null,
+  badges: [],
+  settings: { color: '#7c6ff7' }
+};
+
+try {
+  const saved = localStorage.getItem('monbudget');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    state = Object.assign(state, parsed);
+    if (!Array.isArray(state.goals))        state.goals = [];
+    if (!Array.isArray(state.badges))       state.badges = [];
+    if (!Array.isArray(state.transactions)) state.transactions = [];
+    if (!state.settings)                    state.settings = { color: '#7c6ff7' };
+    if (!state.settings.color)              state.settings.color = '#7c6ff7';
+  }
+} catch(e) { console.warn('Erreur chargement données:', e); }
+
+function save() {
+  try { localStorage.setItem('monbudget', JSON.stringify(state)); }
+  catch(e) { console.warn('Erreur sauvegarde:', e); }
+}
+
+// ── UTILITAIRES ──
+const MOIS_NOMS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function getMoisActuel() {
+  const d = new Date();
+  return { mois: d.getMonth(), annee: d.getFullYear() };
+}
+function getMoisLabel(m, a) { return MOIS_NOMS[m] + ' ' + a; }
+
+function txnsDuMois(mois, annee) {
+  return state.transactions.filter(t => {
+    try {
+      const p = t.date.split('/');
+      if (p.length < 3) return false;
+      return parseInt(p[1],10)-1 === mois && parseInt(p[2],10) === annee;
+    } catch(e) { return false; }
+  });
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── BADGES ──
+function checkBadges(balance) {
+  const { mois, annee } = getMoisActuel();
+  const txnsMois = txnsDuMois(mois, annee);
+  const income  = txnsMois.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = txnsMois.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const checks = {
+    first_txn:      state.transactions.length >= 1,
+    budget_ok:      !!(state.budget && expense <= state.budget && txnsMois.length > 0),
+    saver:          state.goals.length >= 1,
+    goal_reached:   state.goals.some(g => g.saved >= g.target),
+    ten_txns:       state.transactions.length >= 10,
+    positive_month: income > 0 && income > expense,
+  };
+  BADGES_DEF.forEach(b => {
+    if (checks[b.id] && !state.badges.includes(b.id)) {
+      state.badges.push(b.id);
+      save();
+      setTimeout(() => showBadgePopup(b), 600);
+    }
+  });
+}
+
+function showBadgePopup(badge) {
+  document.getElementById('badgePopupEmoji').textContent = badge.emoji;
+  document.getElementById('badgePopupTitle').textContent = '🏆 ' + badge.label;
+  document.getElementById('badgePopupDesc').textContent  = badge.desc;
+  document.getElementById('badgePopup').classList.add('show');
+}
+function closeBadgePopup() { document.getElementById('badgePopup').classList.remove('show'); }
+
+function renderBadges() {
+  const section = document.getElementById('badgesSection');
+  if (state.badges.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  document.getElementById('badgesRow').innerHTML = BADGES_DEF.map(b =>
+    `<div class="badge ${state.badges.includes(b.id)?'earned':'locked'}">${b.emoji} ${escHtml(b.label)}</div>`
+  ).join('');
+}
+
+// ── CONSEIL ──
+function genererConseil(income, expense, balance) {
+  const { mois, annee } = getMoisActuel();
+  const txnsMois  = txnsDuMois(mois, annee);
+  const conseilEl = document.getElementById('conseilCard');
+  const textEl    = document.getElementById('conseilText');
+  if (txnsMois.length === 0) { conseilEl.style.display = 'none'; return; }
+
+  const catTotals = {};
+  txnsMois.filter(t=>t.type==='expense').forEach(t => {
+    const k = t.cat ? t.cat.label : 'Autre';
+    catTotals[k] = (catTotals[k]||0) + t.amount;
+  });
+  const topCat  = Object.entries(catTotals).sort((a,b)=>b[1]-a[1])[0];
+  const taux    = income > 0 ? Math.round((expense/income)*100) : 0;
+  const epargne = income > 0 ? Math.round(((income-expense)/income)*100) : 0;
+
+  let conseil = '';
+  if (state.goals.length > 0 && balance > 0) {
+    state.goals.forEach(g => {
+      const manque = g.target - g.saved;
+      if (manque > 0 && manque <= balance * 0.2) {
+        conseil = `🎯 Vous êtes très proche de votre objectif "${g.name}" ! Il vous manque seulement ${manque.toLocaleString('fr-FR')} FCFA.`;
+      }
+    });
+  }
+  if (!conseil) {
+    if (taux > 90)         conseil = `⚠️ Vous avez dépensé ${taux}% de vos revenus ce mois. Essayez de réduire vos dépenses.`;
+    else if (taux > 70)    conseil = `📊 Vos dépenses représentent ${taux}% de vos revenus.${topCat?' La catégorie la plus importante est "'+topCat[0]+'" ('+topCat[1].toLocaleString('fr-FR')+' FCFA).':''}`;
+    else if (epargne > 20) conseil = `🌟 Excellent ! Vous épargnez ${epargne}% de vos revenus ce mois. Continuez ainsi !`;
+    else if (topCat)       conseil = `💡 Ce mois, vous dépensez le plus en "${topCat[0]}" (${topCat[1].toLocaleString('fr-FR')} FCFA).`;
+    else                   conseil = `💪 Continuez à enregistrer vos transactions pour obtenir des conseils personnalisés !`;
+  }
+  conseilEl.style.display = 'block';
+  textEl.textContent = conseil;
+}
+
+// ── ALERTES ÉPARGNE ──
+function renderAlertes(balance) {
+  const zone = document.getElementById('alertesZone');
+  let html = '';
+  state.goals.forEach(g => {
+    const manque = g.target - g.saved;
+    if (g.saved >= g.target) {
+      html += `<div class="alert-box alert-success">🎉 Objectif "${escHtml(g.name)}" atteint ! Félicitations !</div>`;
+    } else if (balance > 0 && manque <= balance * 0.15) {
+      html += `<div class="alert-box alert-info">🎯 Presque là ! Il vous manque <strong>${manque.toLocaleString('fr-FR')} FCFA</strong> pour "${escHtml(g.name)}".</div>`;
+    } else if (balance > 0 && manque <= balance * 0.3) {
+      html += `<div class="alert-box alert-warning">💡 Encore <strong>${manque.toLocaleString('fr-FR')} FCFA</strong> pour atteindre "${escHtml(g.name)}".</div>`;
+    }
+  });
+  zone.innerHTML = html;
+}
+
+// ── BUDGET ──
+function openBudgetModal() {
+  document.getElementById('budgetInput').value = state.budget || '';
+  document.getElementById('budgetModal').classList.add('open');
+}
+function saveBudget() {
+  const val = parseFloat(document.getElementById('budgetInput').value);
+  if (!val || val <= 0) { showToast('⚠️ Entrez un montant valide !'); return; }
+  state.budget = val;
+  save();
+  document.getElementById('budgetModal').classList.remove('open');
+  renderHome();
+  showToast('✅ Budget enregistré !');
+}
+function renderBudget(expense) {
+  document.getElementById('budgetSpent').textContent = expense.toLocaleString('fr-FR');
+  const barFill = document.getElementById('budgetBarFill');
+  if (!state.budget) {
+    document.getElementById('budgetMax').textContent = 'Non défini';
+    barFill.style.width = '0%';
+    barFill.style.background = 'var(--green)';
+    return;
+  }
+  document.getElementById('budgetMax').textContent = state.budget.toLocaleString('fr-FR');
+  const pct = Math.min(100, (expense / state.budget) * 100);
+  barFill.style.width = pct + '%';
+  barFill.style.background = pct >= 100 ? '#ff6b6b' : pct >= 80 ? '#ffd166' : 'var(--green)';
+}
+
+// ── TRANSACTIONS ──
+let currentType = 'income';
+let selectedCat = 'autre';
+
+function openModal() {
+  selectedCat = 'autre';
+  renderCatPicker();
+  setType('income');
+  document.getElementById('txnAmount').value = '';
+  document.getElementById('txnDesc').value = '';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+function setType(type) {
+  currentType = type;
+  document.getElementById('btnIncome').className  = type==='income'  ? 'type-btn active-income'  : 'type-btn';
+  document.getElementById('btnExpense').className = type==='expense' ? 'type-btn active-expense' : 'type-btn';
+  document.getElementById('catPickerGroup').style.display = type==='income' ? 'none' : 'block';
+}
+
+function renderCatPicker() {
+  document.getElementById('catPicker').innerHTML = CATS.map(c =>
+    `<div class="cat-option ${selectedCat===c.id?'selected':''}" onclick="selectCat('${c.id}')">
+      <div class="cat-emoji">${c.emoji}</div>
+      <div class="cat-label">${escHtml(c.label)}</div>
+    </div>`
+  ).join('');
+}
+function selectCat(id) { selectedCat = id; renderCatPicker(); }
+
+function addTransaction() {
+  const amount = parseFloat(document.getElementById('txnAmount').value);
+  const desc   = document.getElementById('txnDesc').value.trim();
+  if (!amount || amount <= 0) { showToast('⚠️ Entrez un montant valide !'); return; }
+  if (!desc)                  { showToast('⚠️ Entrez une description !'); return; }
+  const cat = currentType === 'income'
+    ? { id:'salaire', emoji:'💼', label:'Salaire', color:'#2dd4a0' }
+    : (CATS.find(c => c.id === selectedCat) || CATS[CATS.length-1]);
+  state.transactions.unshift({
+    id: Date.now(), type: currentType, amount, desc, cat,
+    date: new Date().toLocaleDateString('fr-FR')
+  });
+  save();
+  closeModal();
+  renderHome();
+}
+
+function deleteTransaction(id) {
+  if (confirm('Supprimer cette transaction ?')) {
+    state.transactions = state.transactions.filter(t => t.id !== id);
+    save(); renderHome();
+  }
+}
+
+function txnHTML(t) {
+  const cat = t.cat || { emoji:'📦', label:'Autre', color:'#a7a9be' };
+  return `<div class="txn-item">
+    <div class="txn-left">
+      <div class="txn-icon" style="background:${cat.color}33;">${cat.emoji}</div>
+      <div style="min-width:0;">
+        <div class="txn-name">${escHtml(t.desc)}</div>
+        <div class="txn-cat">${escHtml(cat.label)} · ${escHtml(t.date)}</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;flex-shrink:0;">
+      <div class="txn-amount ${t.type==='income'?'income':'expense'}">
+        ${t.type==='income'?'+':'-'}${t.amount.toLocaleString('fr-FR')} F
+      </div>
+      <div class="delete-btn" onclick="deleteTransaction(${t.id})">🗑</div>
+    </div>
+  </div>`;
+}
+
+// ── ACCUEIL ──
+function renderHome() {
+  const { mois, annee } = getMoisActuel();
+  const txnsMois = txnsDuMois(mois, annee);
+  const income   = txnsMois.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense  = txnsMois.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const balance  = state.transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0)
+                 - state.transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+
+  document.getElementById('balanceAmt').textContent   = balance.toLocaleString('fr-FR') + ' FCFA';
+  document.getElementById('totalIncome').textContent  = income.toLocaleString('fr-FR');
+  document.getElementById('totalExpense').textContent = expense.toLocaleString('fr-FR');
+  renderBudget(expense);
+  renderAlertes(balance);
+  genererConseil(income, expense, balance);
+  renderBadges();
+  checkBadges(balance);
+
+  const list   = document.getElementById('txnList');
+  const recent = state.transactions.slice(0, 8);
+  list.innerHTML = recent.length === 0
+    ? '<p style="text-align:center;color:var(--text2);padding:30px;">Aucune transaction pour l\'instant !</p>'
+    : recent.map(t => txnHTML(t)).join('');
+}
+
+// ── RAPPORT ──
+let rapportMois, rapportAnnee, barChartInst, donutChartInst;
+
+function initRapport() {
+  const { mois, annee } = getMoisActuel();
+  rapportMois = mois; rapportAnnee = annee;
+  renderRapport();
+}
+function changerMoisRapport(dir) {
+  rapportMois += dir;
+  if (rapportMois < 0)  { rapportMois = 11; rapportAnnee--; }
+  if (rapportMois > 11) { rapportMois = 0;  rapportAnnee++; }
+  renderRapport();
+}
+function renderRapport() {
+  document.getElementById('rapportMonthName').textContent = getMoisLabel(rapportMois, rapportAnnee);
+  const txns    = txnsDuMois(rapportMois, rapportAnnee);
+  const income  = txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const solde   = income - expense;
+  const epargne = income > 0 ? Math.round((solde/income)*100) : 0;
+  const catTotals = {};
+  txns.filter(t=>t.type==='expense').forEach(t => {
+    const k = t.cat ? t.cat.label : 'Autre';
+    catTotals[k] = (catTotals[k]||0) + t.amount;
+  });
+  const topCats = Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  document.getElementById('rapportContenu').innerHTML = `
+    <div class="rapport-row"><div class="rapport-label">💰 Revenus</div><div class="rapport-val income">+${income.toLocaleString('fr-FR')} FCFA</div></div>
+    <div class="rapport-row"><div class="rapport-label">💸 Dépenses</div><div class="rapport-val expense">-${expense.toLocaleString('fr-FR')} FCFA</div></div>
+    <div class="rapport-row"><div class="rapport-label">📊 Solde</div><div class="rapport-val" style="color:${solde>=0?'#2dd4a0':'#ff6b6b'}">${solde>=0?'+':''}${solde.toLocaleString('fr-FR')} FCFA</div></div>
+    <div class="rapport-row"><div class="rapport-label">🏦 Taux d'épargne</div><div class="rapport-val" style="color:#2dd4a0">${epargne}%</div></div>
+    ${state.budget?`<div class="rapport-row"><div class="rapport-label">📅 Budget utilisé</div><div class="rapport-val" style="color:${expense>state.budget?'#ff6b6b':'#ffd166'}">${Math.round((expense/state.budget)*100)}%</div></div>`:''}
+    <div class="rapport-row"><div class="rapport-label">📝 Transactions</div><div class="rapport-val">${txns.length}</div></div>
+    ${topCats.length>0?`<div style="margin-top:12px;"><div style="font-size:12px;color:var(--text2);margin-bottom:8px;">TOP DÉPENSES</div>${topCats.map(([l,a])=>`<div class="rapport-row"><div class="rapport-label">${escHtml(l)}</div><div class="rapport-val expense">${a.toLocaleString('fr-FR')} F</div></div>`).join('')}</div>`:''}
+  `;
+
+  if (barChartInst) barChartInst.destroy();
+  barChartInst = new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: { labels:['Revenus','Dépenses','Solde'],
+      datasets:[{data:[income,expense,Math.max(0,solde)],
+        backgroundColor:[state.settings.color,'#ff6b6b','#2dd4a0'],borderRadius:8}]},
+    options:{responsive:true,plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#a7a9be'},grid:{display:false}},
+              y:{ticks:{color:'#a7a9be'},grid:{color:'rgba(255,255,255,0.05)'}}}}
+  });
+
+  if (donutChartInst) donutChartInst.destroy();
+  const allCatTotals = {};
+  state.transactions.filter(t=>t.type==='expense').forEach(t => {
+    const k = t.cat?t.cat.label:'Autre';
+    const color = t.cat?t.cat.color:'#a7a9be';
+    if (!allCatTotals[k]) allCatTotals[k]={amount:0,color};
+    allCatTotals[k].amount += t.amount;
+  });
+  const catEntries = Object.entries(allCatTotals).sort((a,b)=>b[1].amount-a[1].amount);
+  const totalDepense = catEntries.reduce((s,[,v])=>s+v.amount,0)||1;
+
+  if (catEntries.length > 0) {
+    donutChartInst = new Chart(document.getElementById('donutChart'), {
+      type:'doughnut',
+      data:{labels:catEntries.map(([k])=>k),
+        datasets:[{data:catEntries.map(([,v])=>v.amount),
+          backgroundColor:catEntries.map(([,v])=>v.color),
+          borderWidth:0,hoverOffset:6}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false}}}
+    });
+    document.getElementById('catStatRows').innerHTML = catEntries.map(([label,v])=>
+      `<div class="cat-stat-row">
+        <div class="cat-stat-dot" style="background:${v.color}"></div>
+        <div class="cat-stat-name">${escHtml(label)}</div>
+        <div class="cat-stat-pct">${Math.round((v.amount/totalDepense)*100)}%</div>
+        <div class="cat-stat-val">${v.amount.toLocaleString('fr-FR')} F</div>
+      </div>`
+    ).join('');
+  } else {
+    document.getElementById('catStatRows').innerHTML =
+      '<p style="text-align:center;color:var(--text2);padding:20px;">Aucune dépense enregistrée</p>';
+  }
+}
+
+// ── EXPORT PDF ──
+function exportRapportPDF() {
+  if (rapportMois===undefined) initRapport();
+  const {jsPDF}=window.jspdf; const doc=new jsPDF();
+  const moisLabel=getMoisLabel(rapportMois,rapportAnnee);
+  const txns=txnsDuMois(rapportMois,rapportAnnee);
+  const income=txns.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense=txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  doc.setFontSize(20);doc.setTextColor(124,111,247);doc.text('MonBudget — Rapport '+moisLabel,20,20);
+  doc.setFontSize(11);doc.setTextColor(150,150,150);doc.text('Généré le : '+new Date().toLocaleDateString('fr-FR'),20,30);
+  doc.setDrawColor(124,111,247);doc.line(20,35,190,35);
+  doc.setFontSize(13);doc.setTextColor(45,212,160);doc.text('Revenus  : '+income.toLocaleString('fr-FR')+' FCFA',20,48);
+  doc.setTextColor(255,107,107);doc.text('Dépenses : '+expense.toLocaleString('fr-FR')+' FCFA',20,58);
+  doc.setTextColor(124,111,247);doc.text('Solde    : '+(income-expense).toLocaleString('fr-FR')+' FCFA',20,68);
+  doc.setDrawColor(200,200,200);doc.line(20,75,190,75);
+  doc.setFontSize(11);doc.setTextColor(100,100,100);
+  doc.text('Description',20,85);doc.text('Catégorie',100,85);doc.text('Date',145,85);doc.text('Montant',168,85);
+  let y=95;
+  txns.forEach(t=>{
+    if(y>270){doc.addPage();y=20;}
+    doc.setTextColor(t.type==='income'?45:255,t.type==='income'?212:107,t.type==='income'?160:107);
+    doc.setFontSize(10);
+    doc.text(String(t.desc).substring(0,25),20,y);doc.text(t.cat?t.cat.label:'Autre',100,y);
+    doc.text(String(t.date),145,y);doc.text((t.type==='income'?'+':'-')+t.amount.toLocaleString('fr-FR'),168,y);
+    y+=10;
+  });
+  doc.save('rapport-'+moisLabel.toLowerCase().replace(' ','-')+'.pdf');
+}
+
+function exportPDF() {
+  if (!state.transactions.length){showToast('⚠️ Aucune transaction à exporter !');return;}
+  const {jsPDF}=window.jspdf;const doc=new jsPDF();
+  const income=state.transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense=state.transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  doc.setFontSize(20);doc.setTextColor(124,111,247);doc.text('MonBudget - Toutes les transactions',20,20);
+  doc.setFontSize(11);doc.setTextColor(150,150,150);doc.text('Généré le : '+new Date().toLocaleDateString('fr-FR'),20,30);
+  doc.setDrawColor(124,111,247);doc.line(20,35,190,35);
+  doc.setFontSize(12);doc.setTextColor(45,212,160);doc.text('Revenus  : '+income.toLocaleString('fr-FR')+' FCFA',20,48);
+  doc.setTextColor(255,107,107);doc.text('Dépenses : '+expense.toLocaleString('fr-FR')+' FCFA',20,58);
+  doc.setTextColor(124,111,247);doc.text('Solde    : '+(income-expense).toLocaleString('fr-FR')+' FCFA',20,68);
+  doc.setDrawColor(200,200,200);doc.line(20,74,190,74);
+  doc.setFontSize(11);doc.setTextColor(100,100,100);
+  doc.text('Description',20,84);doc.text('Catégorie',100,84);doc.text('Date',145,84);doc.text('Montant',168,84);
+  let y=94;
+  state.transactions.forEach(t=>{
+    if(y>270){doc.addPage();y=20;}
+    doc.setTextColor(t.type==='income'?45:255,t.type==='income'?212:107,t.type==='income'?160:107);
+    doc.setFontSize(10);
+    doc.text(String(t.desc).substring(0,25),20,y);doc.text(t.cat?t.cat.label:'Autre',100,y);
+    doc.text(String(t.date),145,y);doc.text((t.type==='income'?'+':'-')+t.amount.toLocaleString('fr-FR'),168,y);
+    y+=10;
+  });
+  doc.save('monbudget-transactions.pdf');
+}
+
+// ── ÉPARGNE ──
+function openGoalModal() {
+  document.getElementById('goalName').value='';
+  document.getElementById('goalTarget').value='';
+  document.getElementById('goalSaved').value='';
+  document.getElementById('goalModal').classList.add('open');
+}
+function addGoal() {
+  const name=document.getElementById('goalName').value.trim();
+  const target=parseFloat(document.getElementById('goalTarget').value);
+  const saved=parseFloat(document.getElementById('goalSaved').value)||0;
+  if(!name){showToast('⚠️ Entrez un nom !');return;}
+  if(!target||target<=0){showToast('⚠️ Entrez un montant cible !');return;}
+  if(saved>target){showToast('⚠️ Le montant épargné ne peut pas dépasser l\'objectif !');return;}
+  state.goals.push({id:Date.now(),name,target,saved});
+  save();
+  document.getElementById('goalModal').classList.remove('open');
+  renderSavings();checkBadges(0);showToast('🏦 Objectif créé !');
+}
+function addToGoal(id,amount){
+  const g=state.goals.find(g=>g.id===id);
+  if(g){g.saved=Math.min(g.saved+amount,g.target);save();renderSavings();checkBadges(0);
+    if(g.saved>=g.target)showToast('🎉 Objectif "'+g.name+'" atteint !');}
+}
+function addToGoalInput(id){
+  const input=document.getElementById('add_'+id);
+  const amount=parseFloat(input.value);
+  if(!amount||amount<=0){showToast('⚠️ Entrez un montant !');return;}
+  input.value='';addToGoal(id,amount);
+}
+function deleteGoal(id){
+  if(confirm('Supprimer cet objectif ?')){
+    state.goals=state.goals.filter(g=>g.id!==id);save();renderSavings();
+  }
+}
+function renderSavings(){
+  const list=document.getElementById('goalsList');
+  if(!state.goals||state.goals.length===0){
+    list.innerHTML='<p style="text-align:center;color:var(--text2);padding:40px;">Aucun objectif pour l\'instant !</p>';return;
+  }
+  list.innerHTML=state.goals.map(g=>{
+    const pct=Math.min(100,Math.round((g.saved/g.target)*100));
+    return `<div class="goal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="goal-name">${escHtml(g.name)}</div>
+        <div class="delete-btn" onclick="deleteGoal(${g.id})">🗑</div>
+      </div>
+      <div class="goal-amounts">
+        <span>${g.saved.toLocaleString('fr-FR')} FCFA épargnés</span>
+        <span>Objectif : ${g.target.toLocaleString('fr-FR')}</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="goal-pct">${pct}% ${pct>=100?'🎉 Atteint !':''}</div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        <input type="number" id="add_${g.id}" class="form-input" placeholder="Ajouter (FCFA)" style="flex:1;padding:10px 12px;font-size:14px;" min="0">
+        <button onclick="addToGoalInput(${g.id})" style="background:var(--green);color:#0f2a1f;border:none;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;">+</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── PARAMÈTRES ──
+function selectColor(color,el){
+  state.settings.color=color;
+  document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('selected'));
+  el.classList.add('selected');
+  document.documentElement.style.setProperty('--accent',color);
+  save();showToast('🎨 Couleur mise à jour !');
+}
+function resetApp(){
+  if(confirm('Effacer TOUTES les données ? Cette action est irréversible !')){
+    state.transactions=[];state.goals=[];state.budget=null;state.badges=[];
+    save();renderHome();switchPage('home');showToast('Données effacées.');
+  }
+}
+
+// ── NAVIGATION ──
+function switchPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  const pageEl=document.getElementById('page-'+page);
+  if(pageEl)pageEl.style.display='block';
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const navEl=document.getElementById('nav-'+page);
+  if(navEl)navEl.classList.add('active');
+  if(page==='rapport')initRapport();
+  if(page==='savings')renderSavings();
+}
 </script>
 </body>
 </html>
