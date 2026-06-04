@@ -20,10 +20,13 @@ jobs:
         run: npm install
 
       - name: Build Windows exe
-        run: npx electron-builder --win --x64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --win --x64 --publish never
 
       - name: Upload installer
         uses: actions/upload-artifact@v4
         with:
           name: MonBudget-Windows
           path: dist/*.exe
+   
